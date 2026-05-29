@@ -13,8 +13,7 @@ session_start();
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(':email' => $email));
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($usuario && password_verify($senha, $usuario['senha'])) {
+        if($usuario && $usuario['senha'] === md5($senha)) {
             $_SESSION['usuario'] = $usuario['nome'];
             $_SESSION['tipo'] = $usuario['tipo'];
             header("Location: painel.php");
@@ -46,5 +45,4 @@ session_start();
 </div>
 </body>
 </html>
- 
- 
+
